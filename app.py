@@ -28,6 +28,7 @@ def predict(image):
     output_name = session.get_outputs()[0].name
     result = session.run([output_name], {input_name: preprocessed_img})
     prediction = result[0]
+    st.write("Raw model output:", prediction)  # Debugging statement
     predicted_text = decode_prediction(prediction)
     return predicted_text
 
