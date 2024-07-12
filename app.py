@@ -56,10 +56,11 @@ def decode_prediction(prediction, blank_index=0):
             decoded_text.append(char_index)
         previous_char_index = char_index
 
-    # Convert indices to characters, skipping the blank token
-    decoded_string = ''.join(chr(index + ord('A') - 1) if index > 0 else '' for index in decoded_text)
+    # Convert indices to characters
+    char_mapping = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'  # Include all possible characters
+    decoded_string = ''.join(char_mapping[index - 1] if 0 < index <= len(char_mapping) else '' for index in decoded_text)
+    st.write("Decoded Indices:", decoded_text)  # Debugging statement
     return decoded_string
-
 
 # Streamlit interface
 st.title("Handwriting Recognition")
