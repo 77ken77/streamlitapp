@@ -56,8 +56,8 @@ def decode_prediction(prediction, blank_index=0):
             decoded_text.append(char_index)
         previous_char_index = char_index
 
-    # Convert indices to characters
-    char_mapping = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'  # Include all possible characters
+    # Adjust the character mapping to match your model's output
+    char_mapping = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'  # Include digits
     decoded_string = ''.join(char_mapping[index - 1] if 0 < index <= len(char_mapping) else '' for index in decoded_text)
     st.write("Decoded Indices:", decoded_text)  # Debugging statement
     return decoded_string
