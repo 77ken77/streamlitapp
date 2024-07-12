@@ -13,12 +13,15 @@ input_shape = (128, 32, 3)  # Adjusted to 3 channels
 
 # Function to preprocess the image
 def preprocess_image(image):
+    st.write("Original Image Shape:", image.shape)  # Debugging statement
     img = Image.fromarray(image.astype('uint8'), 'RGBA').convert('RGB')
     img = img.resize((input_shape[1], input_shape[0]))
     img = np.array(img)
+    st.write("Resized Image Shape:", img.shape)  # Debugging statement
     img = np.expand_dims(img, axis=0)
     img = img / 255.0
     img = img.astype(np.float32)  # Ensure the data type is float32
+    st.write("Preprocessed Image Shape:", img.shape)  # Debugging statement
     return img
 
 # Function to predict the text from the image
@@ -32,7 +35,7 @@ def predict(image):
     predicted_text = decode_prediction(prediction)
     return predicted_text
 
-# Mock function to decode the prediction (Replace this with actual decoding logic)
+# Improved function to decode the prediction
 def decode_prediction(prediction, blank_index=0):
     """
     Decodes the prediction to a human-readable string using CTC decoding.
@@ -55,9 +58,6 @@ def decode_prediction(prediction, blank_index=0):
     # Convert indices to characters assuming 'A' starts at index 1
     decoded_text = ''.join(chr(index + ord('A') - 1) for index in predicted_text)
     return decoded_text
-
-
-
 
 # Streamlit interface
 st.title("Handwriting Recognition")
