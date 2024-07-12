@@ -1,7 +1,6 @@
 import streamlit as st
 import onnxruntime as ort
 import numpy as np
-import cv2
 from streamlit_drawable_canvas import st_canvas
 from PIL import Image
 
@@ -10,14 +9,13 @@ model_path = "handwriting_recognition_model.onnx"
 session = ort.InferenceSession(model_path)
 
 # Define the model input shape
-input_shape = (128, 32)
+input_shape = (128, 32, 3)  # Adjusted to 3 channels
 
 # Function to preprocess the image
 def preprocess_image(image):
-    img = Image.fromarray(image.astype('uint8'), 'RGBA').convert('L')
+    img = Image.fromarray(image.astype('uint8'), 'RGBA').convert('RGB')
     img = img.resize((input_shape[1], input_shape[0]))
     img = np.array(img)
-    img = np.stack((img,) * 3, axis=-1)  # Convert grayscale to RGB by stacking the same array three times
     img = np.expand_dims(img, axis=0)
     img = img / 255.0
     img = img.astype(np.float32)  # Ensure the data type is float32
