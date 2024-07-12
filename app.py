@@ -35,7 +35,7 @@ def predict(image):
 # Mock function to decode the prediction (Replace this with actual decoding logic)
 def decode_prediction(prediction, blank_index=0):
     """
-    Decodes the prediction to a human-readable string.
+    Decodes the prediction to a human-readable string using CTC decoding.
 
     Args:
         prediction (np.ndarray): The raw output from the model, a 2D array where each row is a softmax output for a character.
@@ -45,13 +45,17 @@ def decode_prediction(prediction, blank_index=0):
         str: The decoded string.
     """
     predicted_text = []
+    previous_char_index = -1  # To track and collapse repeated characters
     for char_probs in prediction[0]:
         char_index = np.argmax(char_probs)
-        if char_index != blank_index:  # Skip blank token
+        if char_index != blank_index and char_index != previous_char_index:
             predicted_text.append(char_index)
+        previous_char_index = char_index
+
     # Convert indices to characters assuming 'A' starts at index 1
     decoded_text = ''.join(chr(index + ord('A') - 1) for index in predicted_text)
     return decoded_text
+
 
 
 # Streamlit interface
