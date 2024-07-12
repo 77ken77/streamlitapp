@@ -48,13 +48,14 @@ def decode_prediction(prediction, blank_index=0):
     previous_char_index = -1  # To track and collapse repeated characters
     for char_probs in prediction[0]:
         char_index = np.argmax(char_probs)
-        if char_index != blank_index and char_index != previous_char_index:
+        if char_index != blank_index and (len(predicted_text) == 0 or char_index != previous_char_index):
             predicted_text.append(char_index)
         previous_char_index = char_index
 
     # Convert indices to characters assuming 'A' starts at index 1
     decoded_text = ''.join(chr(index + ord('A') - 1) for index in predicted_text)
     return decoded_text
+
 
 
 
