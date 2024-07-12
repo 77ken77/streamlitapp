@@ -31,11 +31,11 @@ def predict(image):
     predicted_text = decode_prediction(prediction)
     return predicted_text
 
-# Function to decode the prediction
+# Mock function to decode the prediction (Replace this with actual decoding logic)
 def decode_prediction(prediction):
-    # You need to implement your own decoding logic based on your model's output
-    # Here we assume a dummy implementation for illustration purposes
-    predicted_text = "decoded_text"  # Replace this with actual decoding logic
+    # Assuming prediction is a 2D array where each row is a softmax output for a character
+    # Replace this with actual decoding logic
+    predicted_text = ''.join(chr(np.argmax(char_prob) + ord('A')) for char_prob in prediction[0])
     return predicted_text
 
 # Streamlit interface
