@@ -17,8 +17,8 @@ def preprocess_image(image):
     img = Image.fromarray(image.astype('uint8'), 'RGBA').convert('L')
     img = img.resize((input_shape[1], input_shape[0]))
     img = np.array(img)
+    img = np.stack((img,) * 3, axis=-1)  # Convert grayscale to RGB by stacking the same array three times
     img = np.expand_dims(img, axis=0)
-    img = np.expand_dims(img, axis=-1)
     img = img / 255.0
     img = img.astype(np.float32)  # Ensure the data type is float32
     return img
