@@ -1,0 +1,6 @@
+streamlit
+onnxruntime
+opencv-python-headless
+streamlit-drawable-canvas
+numpy
+Pillow
