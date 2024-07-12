@@ -20,6 +20,7 @@ def preprocess_image(image):
     img = np.expand_dims(img, axis=0)
     img = np.expand_dims(img, axis=-1)
     img = img / 255.0
+    img = img.astype(np.float32)  # Ensure the data type is float32
     return img
 
 # Function to predict the text from the image
