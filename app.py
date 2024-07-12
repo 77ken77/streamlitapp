@@ -33,11 +33,26 @@ def predict(image):
     return predicted_text
 
 # Mock function to decode the prediction (Replace this with actual decoding logic)
-def decode_prediction(prediction):
-    # Assuming prediction is a 2D array where each row is a softmax output for a character
-    # Replace this with actual decoding logic
-    predicted_text = ''.join(chr(np.argmax(char_prob) + ord('A')) for char_prob in prediction[0])
-    return predicted_text
+def decode_prediction(prediction, blank_index=0):
+    """
+    Decodes the prediction to a human-readable string.
+
+    Args:
+        prediction (np.ndarray): The raw output from the model, a 2D array where each row is a softmax output for a character.
+        blank_index (int): The index in the softmax output corresponding to the CTC blank token.
+
+    Returns:
+        str: The decoded string.
+    """
+    predicted_text = []
+    for char_probs in prediction[0]:
+        char_index = np.argmax(char_probs)
+        if char_index != blank_index:  # Skip blank token
+            predicted_text.append(char_index)
+    # Convert indices to characters assuming 'A' starts at index 1
+    decoded_text = ''.join(chr(index + ord('A') - 1) for index in predicted_text)
+    return decoded_text
+
 
 # Streamlit interface
 st.title("Handwriting Recognition")
